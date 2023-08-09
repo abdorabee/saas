@@ -16,6 +16,8 @@ import { ChatCompletionResponseMessage } from "openai";
 import Empty from "@/components/empty";
 import Loader from "@/components/loader";
 import { cn } from "@/lib/utils";
+import { UserAvater } from "@/components/user-avater";
+import { BotAvater } from "@/components/bot-avater";
 
 const ConversationPage = () => {
   const router = useRouter();
@@ -120,7 +122,8 @@ const ConversationPage = () => {
                     : "bg-muted"
                 )}
               >
-                {message.content}
+                {message.role === "user" ? <UserAvater /> : <BotAvater />}
+                <p className="text-sm">{message.content}</p>
               </div>
             ))}
           </div>
