@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { formSchema } from "./constants";
+import { amountOptions, formSchema } from "./constants";
 import * as z from "zod";
 import { Heading } from "@/components/heading";
 import { ImageIcon } from "lucide-react";
@@ -17,6 +17,13 @@ import Loader from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { UserAvater } from "@/components/user-avater";
 import { BotAvater } from "@/components/bot-avater";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ImagePage = () => {
   const router = useRouter();
@@ -77,7 +84,7 @@ const ImagePage = () => {
                   <FormItem className="col-span-12 lg:col-span-10">
                     <FormControl className="m-0 p-0">
                       <Input
-                        className="boder-0 outline-none
+                        className="border-0 outline-none
                     focus-visible:ring-0
                     focus-visible:ring-transparent"
                         disabled={isLoading}
@@ -85,6 +92,33 @@ const ImagePage = () => {
                         {...field}
                       />
                     </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem className="col-span-12 lg:col-span-2">
+                    <Select
+                      disabled={isLoading}
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      defaultValues={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue defaultValue={field.value} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {amountOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormItem>
                 )}
               />
