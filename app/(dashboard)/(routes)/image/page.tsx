@@ -106,7 +106,7 @@ const ImagePage = () => {
                       disabled={isLoading}
                       onValueChange={field.onChange}
                       value={field.value}
-                      defaultValues={field.value}
+                      defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -133,7 +133,7 @@ const ImagePage = () => {
                       disabled={isLoading}
                       onValueChange={field.onChange}
                       value={field.value}
-                      defaultValues={field.value}
+                      defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
