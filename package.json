@@ -42,5 +42,8 @@
   },
   "main": "index.js",
   "author": "abdorabee <abdorabee1134@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prisma": "^5.1.1"
+  }
 }
