@@ -15,8 +15,10 @@ import { useState } from "react";
 import { ChatCompletionResponseMessage } from "openai";
 import Empty from "@/components/empty";
 import Loader from "@/components/loader";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const MusicPage = () => {
+  const proModal = useProModal();
   const router = useRouter();
   const [music, setMusic] = useState<string>();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,9 +35,10 @@ const MusicPage = () => {
       const response = await axios.post("/api/music", values);
       setMusic(response.data.audio);
       form.reset();
-    } catch (error) {
-      // TODO:OPEN pro model
-      console.log(error);
+    } catch (error:any) {
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
     } finally {
       router.refresh();
     }
