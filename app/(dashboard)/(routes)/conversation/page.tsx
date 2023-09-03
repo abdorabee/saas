@@ -18,8 +18,10 @@ import Loader from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { UserAvater } from "@/components/user-avater";
 import { BotAvater } from "@/components/bot-avater";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const ConversationPage = () => {
+  const proModal = useProModal();
   const router = useRouter();
   const [message, setMessage] = useState<ChatCompletionResponseMessage[]>([]);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,8 +46,9 @@ const ConversationPage = () => {
       setMessage((current) => [...current, userMessage, response.data]);
       form.reset();
     } catch (error) {
-      // TODO:OPEN pro model
-      console.log(error);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
     } finally {
       router.refresh();
     }

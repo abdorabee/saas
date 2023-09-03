@@ -19,8 +19,11 @@ import { cn } from "@/lib/utils";
 import { UserAvater } from "@/components/user-avater";
 import { BotAvater } from "@/components/bot-avater";
 import ReactMarkdown from "react-markdown";
+import { useProModal } from "@/hooks/use-pro-modal";
+import { NextResponse } from "next/server";
 
 const CodePage = () => {
+  const proModal = useProModal();
   const router = useRouter();
   const [message, setMessage] = useState<ChatCompletionResponseMessage[]>([]);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,9 +47,17 @@ const CodePage = () => {
 
       setMessage((current) => [...current, userMessage, response.data]);
       form.reset();
-    } catch (error) {
-      // TODO:OPEN pro model
-      console.log(error);
+    } catch (error:any) {
+       /* eslint-disable prettier/prettier */
+  console.error("[AXIOS_ERROR]", error);
+  /* eslint-enable prettier/prettier */
+
+
+      if (error.response && error.response.status === 403) {
+        proModal.onOpen();
+      } else {
+        return new NextResponse("Internal error", { status: 500 });
+      }
     } finally {
       router.refresh();
     }
