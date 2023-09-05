@@ -43,7 +43,7 @@ export async function GET() {
           price_data: {
             currency: "usd",
             product_data: {
-              name: "Subscription",
+              name: "Nathan Pro",
               description: "Unlimited AI Generation",
             },
             unit_amount: 2000,
